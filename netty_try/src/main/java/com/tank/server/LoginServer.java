@@ -7,6 +7,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +46,8 @@ public class LoginServer {
           protected void initChannel(SocketChannel sc) throws Exception {
             final ChannelPipeline pipeline = sc.pipeline();
             //TODO load reflect result from config file
+            pipeline.addLast(new StringDecoder());
+            pipeline.addLast(new StringEncoder());
             pipeline.addLast(new LoginHandler());
           }
         });

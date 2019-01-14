@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- *
+ * @author fuchun
  */
 @Slf4j
 public class NettyDemo {
@@ -15,7 +15,7 @@ public class NettyDemo {
 
     ExecutorService service = Executors.newSingleThreadExecutor();
 
-    int port = 10000;
+    int port = 10008;
 
     LoginServer loginServer = new LoginServer(port);
 
