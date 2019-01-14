@@ -37,7 +37,8 @@ public class LoginHandler extends ChannelInboundHandlerAdapter {
         log.info("{} login success", username);
         Objects.requireNonNull(this.onlineUsers);
         this.onlineUsers.add(username, ctx);
-        this.onlineUsers.broadcast("on line users is:" + this.onlineUsers.number());
+        final String tips = String.format("on line users is: %s \r\n", this.onlineUsers.number());
+        this.onlineUsers.broadcast(tips);
       }
     }
 

@@ -15,7 +15,7 @@ public class NettyDemo {
 
     ExecutorService service = Executors.newSingleThreadExecutor();
 
-    int port = 10008;
+    int port = 10000;
 
     LoginServer loginServer = new LoginServer(port);
 
