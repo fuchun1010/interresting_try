@@ -1,5 +1,6 @@
 package com.tank;
 
+import com.tank.common.Constants;
 import com.tank.server.LoginServer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,9 +16,7 @@ public class NettyDemo {
 
     ExecutorService service = Executors.newSingleThreadExecutor();
 
-    int port = 10000;
-
-    LoginServer loginServer = new LoginServer(port);
+    LoginServer loginServer = new LoginServer(Constants.PORT);
 
     service.execute(loginServer::start);
   }

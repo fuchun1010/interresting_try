@@ -1,7 +1,6 @@
 package com.tank.server;
 
 import com.google.common.base.Preconditions;
-import com.tank.server.handler.ChatHandler;
 import com.tank.server.handler.LoginHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -17,6 +16,7 @@ import java.util.Objects;
 
 /**
  * @author fuchun
+ * @date 2019-01-14
  */
 @Slf4j
 public class LoginServer {
