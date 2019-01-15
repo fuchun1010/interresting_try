@@ -1,6 +1,7 @@
 package com.tank.server;
 
 import com.google.common.base.Preconditions;
+import com.tank.server.handler.ChatHandler;
 import com.tank.server.handler.LoginHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -60,6 +61,9 @@ public class LoginServer {
     } catch (InterruptedException e) {
       log.error(" server start exception: {}", e.getMessage());
       e.printStackTrace();
+    } finally {
+      worker.shutdownGracefully();
+      server.shutdownGracefully();
     }
   }
 

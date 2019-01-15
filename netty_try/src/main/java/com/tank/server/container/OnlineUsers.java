@@ -5,6 +5,8 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.tank.common.BytesUtil;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,7 +69,13 @@ public class OnlineUsers {
       while (keys.hasNext()) {
         final String userName = keys.next();
         final ChannelHandlerContext ctx = users.get(userName);
-        ctx.writeAndFlush(Unpooled.copiedBuffer(message.getBytes()));
+        final ChannelFuture channelFuture = ctx.writeAndFlush(Unpooled.copiedBuffer(message.getBytes()));
+        channelFuture.addListener(new ChannelFutureListener() {
+          @Override
+          public void operationComplete(ChannelFuture channelFuture) throws Exception {
+            log.info("send success");
+          }
+        });
       }
     } finally {
       log.info("unlock in broadcast method");

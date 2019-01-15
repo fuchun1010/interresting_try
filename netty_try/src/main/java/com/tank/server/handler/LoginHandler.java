@@ -52,6 +52,7 @@ public class LoginHandler extends ChannelInboundHandlerAdapter {
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
     log.info("exception caught");
+    ctx.close();
   }
 
   private OnlineUsers onlineUsers = OnlineUsers.newInstance();
