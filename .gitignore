@@ -5,5 +5,7 @@ intresting_try.iml
 netty_try/target
 netty_try/netty_try.iml
 
+mongo_try/target
+mongo_try/mongo_try.iml
 
 logs/
