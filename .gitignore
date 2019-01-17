@@ -1,11 +1,16 @@
 .idea/
 intresting_try.iml
 
+basic/target
+basic/basic.iml
+
 
 netty_try/target
 netty_try/netty_try.iml
 
 mongo_try/target
 mongo_try/mongo_try.iml
+
+
 
 logs/

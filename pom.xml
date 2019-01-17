@@ -56,6 +56,7 @@
     <modules>
         <module>netty_try</module>
     <module>mongo_try</module>
+    <module>basic</module>
   </modules>
 
 </project>
