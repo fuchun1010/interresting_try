@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package com.tank.message;
 
-option java_outer_classname = "LoginProto";
+option java_outer_classname = "LoginRequestProto";
 
-message Login {
+message LoginRequest {
 
     string name = 1;
 

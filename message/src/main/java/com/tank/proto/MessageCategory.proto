@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.tank.message;
+
+option java_outer_classname = "MessageCategoryProto";
+
+message MessageCategory {
+
+    enum RequestType {
+        LOGIN_REQUEST = 0;
+        SEARCH_REQUEST = 1;
+    }
+
+    RequestType requestType = 1;
+
+    bytes data = 2;
+
+}
