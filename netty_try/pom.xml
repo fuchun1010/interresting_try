@@ -21,6 +21,11 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.32.Final</version>
         </dependency>
+        <dependency>
+            <groupId>com.tank.message</groupId>
+            <artifactId>message</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -19,5 +19,7 @@ public class NettyDemo {
     LoginServer loginServer = new LoginServer(Constants.PORT);
 
     service.execute(loginServer::start);
+
+
   }
 }

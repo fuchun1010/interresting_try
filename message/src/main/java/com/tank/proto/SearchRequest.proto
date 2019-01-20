@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package com.tank.message;
+
+option java_outer_classname = "SearchRequestProto";
+
+message SearchRequest {
+
+    string query = 1;
+
+    sint32 page_number = 2;
+
+    sint32 result_per_page = 3;
+
+    message Person {
+        string name = 1;
+        sint32 gender = 2;
+    }
+
+    repeated Person persons = 4;
+}
