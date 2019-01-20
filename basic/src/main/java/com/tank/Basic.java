@@ -1,70 +1,43 @@
 package com.tank;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
-import java.io.*;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import com.tank.message.LoginRequestProto;
+import com.tank.message.MessageCategoryProto;
+import com.tank.message.SearchRequestProto;
+import com.tank.ob.LoginObserver;
+import com.tank.ob.MessageObservable;
+import lombok.val;
 
 /**
  * @author fuchun
  * @date 2019-01-17
  */
 public class Basic {
+
   public static void main(String[] args) {
 
-    final String configPath = System.getProperty("user.dir") + File.separator + "config/stores.csv";
+    MessageObservable messageObservable = new MessageObservable();
+    messageObservable.addObserver(new LoginObserver());
 
-    File file = new File(configPath);
+    val loginBuilder = LoginRequestProto.LoginRequest.newBuilder();
+    val loginRequest = loginBuilder.setName("lisi").setPassword("123456").build();
 
-    if (!file.exists()) {
-      throw new RuntimeException("file not exists");
-    }
-    final List<String> stores = Lists.newLinkedList();
-    BufferedReader in = null;
-    try {
-      in = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-      while (true) {
-        final String code = in.readLine();
-        if (Objects.isNull(code)) {
-          break;
-        }
-        stores.add(code);
+    val data = loginRequest.toByteString();
 
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      Objects.requireNonNull(in);
-      try {
-        in.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
+    val messageCategoryBuilder = MessageCategoryProto.MessageCategory.newBuilder();
+    val messageCategory = messageCategoryBuilder.setRequestType(MessageCategoryProto.MessageCategory.RequestType.LOGIN_REQUEST)
+        .setData(data)
+        .build();
 
-    final Map<Integer, Integer> storeHash = Maps.newHashMap();
+    messageObservable.changeData(messageCategory);
 
-    for (String storeCode : stores) {
-      int hashCode = Objects.hashCode(storeCode);
-      int code = Math.floorMod(hashCode, 100);
-      boolean exists = storeHash.containsKey(code);
-      if (!exists) {
-        storeHash.put(code, 1);
-      } else {
-        int count = storeHash.get(code);
-        count++;
-        storeHash.put(code, count);
-      }
 
-    }
-
-    for (Map.Entry<Integer, Integer> item : storeHash.entrySet()) {
-
-      System.out.println("code = [" + item.getKey() + "], count=" + item.getValue());
-    }
-
+    val searchBuilder = SearchRequestProto.SearchRequest.newBuilder();
+    val searchRequest = searchBuilder.setResultPerPage(50).setPageNumber(1).setResultPerPage(20).build();
+    val searchData = searchRequest.toByteString();
+    val searchRequestCategory = messageCategoryBuilder.setRequestType(MessageCategoryProto.MessageCategory.RequestType.SEARCH_REQUEST)
+        .setData(searchData)
+        .build();
+    messageObservable.changeData(searchRequestCategory);
+    
   }
 }

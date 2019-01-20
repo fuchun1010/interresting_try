@@ -1,5 +1,7 @@
 package com.tank;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.tank.message.LoginRequestProto;
 import com.tank.message.MessageCategoryProto;
 import com.tank.message.SearchRequestProto;
@@ -33,13 +35,28 @@ public class MessageDemo {
         .setName("diaocan")
         .build();
 
-    val searchData = searchBuilder.addPersons(person_a).addPersons(person_b).build().toByteString();
+    val searchData = searchBuilder.addPersons(person_a)
+        .addPersons(person_b)
+        .build()
+        .toByteString();
 
-    val searchCategory = messageCategoryBuilder.setRequestType(MessageCategoryProto.MessageCategory.RequestType.SEARCH_REQUEST)
+    val searchCategory = messageCategoryBuilder.setRequestType(MessageCategoryProto
+        .MessageCategory
+        .RequestType.SEARCH_REQUEST)
         .setData(searchData)
         .build();
 
 
     System.out.println("search request size = [" + searchCategory.toByteArray().length + "]");
+
+    ByteString searchRequestData = searchCategory.getData();
+
+    try {
+      val searchRequest = SearchRequestProto.SearchRequest.parseFrom(searchRequestData);
+      System.out.println("page number = [" + searchRequest.getPageNumber() + "]");
+      System.out.println("persons number = [" + searchRequest.getPersonsCount() + "]");
+    } catch (InvalidProtocolBufferException e) {
+      e.printStackTrace();
+    }
   }
 }
