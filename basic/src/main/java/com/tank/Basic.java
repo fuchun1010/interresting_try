@@ -16,6 +16,7 @@ public class Basic {
   public static void main(String[] args) {
 
     MessageObservable messageObservable = new MessageObservable();
+
     messageObservable.addObserver(new LoginObserver());
 
     val loginBuilder = LoginRequestProto.LoginRequest.newBuilder();
@@ -38,6 +39,6 @@ public class Basic {
         .setData(searchData)
         .build();
     messageObservable.changeData(searchRequestCategory);
-    
+
   }
 }
