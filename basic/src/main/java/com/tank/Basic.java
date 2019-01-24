@@ -1,11 +1,17 @@
 package com.tank;
 
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import com.tank.message.LoginRequestProto;
 import com.tank.message.MessageCategoryProto;
 import com.tank.message.SearchRequestProto;
 import com.tank.ob.LoginObserver;
 import com.tank.ob.MessageObservable;
 import lombok.val;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * @author fuchun
@@ -29,6 +35,8 @@ public class Basic {
         .setData(data)
         .build();
 
+    System.out.println("proto buff person = [" + messageCategory.toByteArray().length + "]");
+
     messageObservable.changeData(messageCategory);
 
 
@@ -39,6 +47,21 @@ public class Basic {
         .setData(searchData)
         .build();
     messageObservable.changeData(searchRequestCategory);
+
+    Person person = new Person();
+    person.setName("lisi");
+    person.setPassword("123456");
+
+    try {
+      ByteOutputStream bo = new ByteOutputStream();
+      ObjectOutputStream out = new ObjectOutputStream(bo);
+      out.writeObject(person);
+      out.flush();
+      byte[] xx = bo.getBytes();
+      System.out.println("java seria person  = [" + xx.length + "]");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
   }
 }
