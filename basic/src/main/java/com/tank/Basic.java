@@ -1,27 +1,19 @@
 package com.tank;
 
-import com.google.common.collect.Maps;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
-import com.tank.anno.Bs;
-import com.tank.anno.MessageHandler;
 import com.tank.message.LoginRequestProto;
 import com.tank.message.MessageCategoryProto;
 import com.tank.message.SearchRequestProto;
 import com.tank.ob.LoginObserver;
 import com.tank.ob.MessageObservable;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import lombok.val;
-import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * @author fuchun
@@ -30,9 +22,16 @@ import java.util.Set;
 public class Basic {
 
   public static void main(String[] args) {
-
+    String rootDir = System.getProperty("user.dir");
+    StringJoiner path = new StringJoiner(File.separator);
+    path.add(rootDir);
+    path.add("config");
+    String configFileDir = path.toString();
+    String dataSourceConfig = configFileDir + File.separator + "datasource.conf";
+    Config config = ConfigFactory.parseFile(new File(dataSourceConfig));
+    String mysqlUrl = config.getString("mysql.url");
+    System.out.println("path = [" + mysqlUrl + "]");
   }
-
 
 
   private static void protoTry() {
