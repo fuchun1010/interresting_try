@@ -1,17 +1,27 @@
 package com.tank;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import com.google.common.collect.Maps;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import com.tank.anno.Bs;
+import com.tank.anno.MessageHandler;
 import com.tank.message.LoginRequestProto;
 import com.tank.message.MessageCategoryProto;
 import com.tank.message.SearchRequestProto;
 import com.tank.ob.LoginObserver;
 import com.tank.ob.MessageObservable;
 import lombok.val;
+import org.reflections.Reflections;
+import org.reflections.scanners.MethodAnnotationsScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.TypeAnnotationsScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author fuchun
@@ -21,6 +31,11 @@ public class Basic {
 
   public static void main(String[] args) {
 
+  }
+
+
+
+  private static void protoTry() {
     MessageObservable messageObservable = new MessageObservable();
 
     messageObservable.addObserver(new LoginObserver());
@@ -62,6 +77,5 @@ public class Basic {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 }

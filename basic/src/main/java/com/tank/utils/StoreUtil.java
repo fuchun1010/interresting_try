@@ -26,6 +26,11 @@ public class StoreUtil {
     this.filePath = configPath;
   }
 
+  public Map<String,String> loadFiles(String propsFile) {
+
+    return null;
+  }
+
   public Map<Integer, Integer> statistics() {
     Map<Integer, Integer> storeHash = Maps.newHashMap();
     List<String> stores = this.loadConfig();
